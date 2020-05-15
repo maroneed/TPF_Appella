@@ -1,0 +1,13 @@
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.exe
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.deps.json
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.runtimeconfig.json
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.runtimeconfig.dev.json
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.dll
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\bin\Debug\netcoreapp3.1\JuegoIA.pdb
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.csprojAssemblyReference.cache
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.csproj.CoreCompileInputs.cache
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.AssemblyInfoInputs.cache
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.AssemblyInfo.cs
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.dll
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.pdb
+C:\Users\Invisible\source\repos\TPF_Appella\JuegoIA\JuegoIA\obj\Debug\netcoreapp3.1\JuegoIA.genruntimeconfig.cache
