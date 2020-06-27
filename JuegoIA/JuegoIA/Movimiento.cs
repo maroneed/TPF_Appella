@@ -6,10 +6,10 @@ namespace JuegoIA
 {
     public class Movimiento
     {
-        private int carta { get; set; }
-        private int limiteActual { get; set; }
-        private int ganadas { get; set; }
-        private bool esAi { get; set; }
+        public int carta { get; set; }
+        public int limiteActual { get; set; }
+        public int ganadas { get; set; }
+        public bool esAi { get; set; }
 
         public Movimiento(int carta, int limiteActual, int ganadas, bool esAi)
         {
