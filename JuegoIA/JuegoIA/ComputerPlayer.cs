@@ -35,16 +35,16 @@ namespace juegoIA
         {
             int cartaJugada = 0;
 
-            foreach (ArbolGeneral<DatosJugada> cartas in referencia.getHijos())
+            foreach (ArbolGeneral<DatosJugada> cartas in referencia.getHijos())//itera el nivel de cartas del humano
             {
                 if (cartas.getDatoRaiz().carta == UltimaCartaHumano)
                 {
                     referencia = cartas;                         //Nos ubicamos en el hijo si es que la carta del human coincide con la del arbol.
-                    foreach (ArbolGeneral<DatosJugada> cartatirar in cartas.getHijos())
+                    foreach (ArbolGeneral<DatosJugada> cartatirar in cartas.getHijos()) //itera el nivel de cartas de computer
                     {
                         if (cartatirar.getDatoRaiz().valorDeConveniencia == 1)
                         {
-                            referencia = cartatirar;                  //Una vez que encontro con valor de la heuristica 1 se le asigna la carta a Computer y se deja ubicado el arbol en esa posicion.
+                            referencia = cartatirar;            //deja ubicado el arbol en el nivel de computer
                             cartaJugada = cartatirar.getDatoRaiz().carta;
 
                             return cartaJugada;
