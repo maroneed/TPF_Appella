@@ -4,19 +4,23 @@ using System.Text;
 
 namespace JuegoIA
 {
-    public class Movimiento
+    public class DatosJugada
     {
+
+
         public int carta { get; set; }
         public int limiteActual { get; set; }
-        public int ganadas { get; set; }
-        public bool esAi { get; set; }
+        public int valorDeConveniencia { get; set; }
+        public bool esAI { get; set; }
 
-        public Movimiento(int carta, int limiteActual, int ganadas, bool esAi)
+        public DatosJugada(int carta, int limiteActual, bool esAI)
         {
             this.carta = carta;
             this.limiteActual = limiteActual;
-            this.ganadas = ganadas;
-            this.esAi = esAi;
+            this.esAI = esAI;
         }
+
+
+
     }
 }

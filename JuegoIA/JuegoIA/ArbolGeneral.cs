@@ -56,6 +56,8 @@ namespace juegoIA
 		public int nivel(T dato) {
 			return 0;
 		}
+
+		
 	
 	}
 }

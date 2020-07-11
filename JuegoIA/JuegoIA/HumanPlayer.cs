@@ -39,7 +39,20 @@ namespace juegoIA
 					Console.Write(", ");
 				}
 			}
-		
+			Console.WriteLine(" ");
+			Console.WriteLine("---------------------- ");
+			Console.WriteLine(" ");
+
+			Console.WriteLine("Naipes disponibles (Computer):");
+			for (int i = 0; i < naipesComputer.Count; i++)
+			{
+				Console.Write(naipesComputer[i].ToString());
+				if (i < naipesComputer.Count - 1)
+				{
+					Console.Write(", ");
+				}
+			}
+
 			Console.WriteLine();
 			if (!random_card) {
 				Console.Write("Ingrese naipe:");
