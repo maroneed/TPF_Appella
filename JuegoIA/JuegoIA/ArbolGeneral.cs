@@ -57,7 +57,11 @@ namespace juegoIA
 			return 0;
 		}
 
-		
-	
+		public void limpiar()
+		{
+			foreach (var hijos in this.getHijos())
+				this.eliminarHijo(hijos);                                   //Al borrar los hijos proximos de la raiz se podria decir que el arbol con la raiz 0 es un arbol vacio.
+		}
+
 	}
 }

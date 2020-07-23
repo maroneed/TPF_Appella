@@ -8,7 +8,7 @@ namespace juegoIA
 {
 	public class ComputerPlayer: Jugador
 	{
-        ArbolGeneral<DatosJugada> minimax;
+        private static ArbolGeneral<DatosJugada> minimax;
 
         private static ArbolGeneral<DatosJugada> referencia = new ArbolGeneral<DatosJugada>(null);
 
@@ -26,21 +26,22 @@ namespace juegoIA
             bool turno = true; //esta variable se debe declarar como atributo de clase
             naipes = cartasPropias;
 
-            crearArbol(cartasPropias, cartasOponente, limite, turno, this.minimax);
-            Console.WriteLine(this.minimax.getHijos().Count);
+            crearArbol(cartasPropias, cartasOponente, limite, turno, minimax);
+            Console.WriteLine(minimax.getHijos().Count);
         }
 
 
         public override int descartarUnaCarta()
         {
             int cartaJugada = 0;
-
-            foreach (ArbolGeneral<DatosJugada> cartas in referencia.getHijos())//itera el nivel de cartas del humano
+            //la primera vez referencia es null(recien arranca el arbol minimax)
+            foreach (ArbolGeneral<DatosJugada> cartas in referencia.getHijos())//itera el nivel de cartas del humano (cuando referencia es el nivel de cartas de cumputer, 
+                                                                               //referencia.getHijos sera de nuevo un nivel de cartas del humano)
             {
-                if (cartas.getDatoRaiz().carta == UltimaCartaHumano)
+                if (cartas.getDatoRaiz().carta == UltimaCartaHumano) //busca la arbol que tenga como dato la carta que tiro el humano y se poseciona ahí
                 {
-                    referencia = cartas;                         //Nos ubicamos en el hijo si es que la carta del human coincide con la del arbol.
-                    foreach (ArbolGeneral<DatosJugada> cartatirar in cartas.getHijos()) //itera el nivel de cartas de computer
+                    referencia = cartas;                         //Nos ubicamos en los hijos del arbol correspondiente a la carta que tiro el humano
+                    foreach (ArbolGeneral<DatosJugada> cartatirar in cartas.getHijos()) //itera el nivel de cartas de computer que corresponde al arbol de la carta que tiro el humano.
                     {
                         if (cartatirar.getDatoRaiz().valorDeConveniencia == 1)
                         {
@@ -54,7 +55,7 @@ namespace juegoIA
                             //Si no encuentra con valor 1 tirara la primera que encuentre
                         }
                         {
-                            referencia = cartatirar;
+                            referencia = cartatirar;   //deja ubicado el arbol en el nivel de computer
                             cartaJugada = cartatirar.getDatoRaiz().carta;
 
 
@@ -185,33 +186,7 @@ namespace juegoIA
             }
         }
 
-        public void ImprimirHojas()
-		{
-			Cola<ArbolGeneral<DatosJugada>> c = new Cola<ArbolGeneral<DatosJugada>>();
-			ArbolGeneral<DatosJugada> nodoaux;
-			c.encolar(minimax);
-			while (!c.esVacia())
-			{
-				nodoaux = c.desencolar();
-				if (!nodoaux.esHoja())
-				{
-					foreach (var nodo in nodoaux.getHijos())
-					{
-						c.encolar(nodo);
-					}
-				}
-				if (nodoaux.esHoja() && nodoaux.getDatoRaiz().limiteActual <= 0)
-				{
-
-					Console.Write("|(" + nodoaux.getDatoRaiz().carta + ")[Pierde]|, ");
-				}
-				if (nodoaux.esHoja() && nodoaux.getDatoRaiz().limiteActual >= 0)
-				{
-					Console.Write("|(" + nodoaux.getDatoRaiz().carta + ")[Gana], ");
-				}
-			}
-
-		}
+        
 		public void porNiveles()
 		{
 			Cola<ArbolGeneral<DatosJugada>> c = new Cola<ArbolGeneral<DatosJugada>>();
@@ -248,5 +223,117 @@ namespace juegoIA
 
 			}
 		}
-	}
+
+        public void imprimirNivel(int nivel, ArbolGeneral<DatosJugada> arbol)
+        {
+            Cola<ArbolGeneral<DatosJugada>> c = new Cola<ArbolGeneral<DatosJugada>>();
+            //ArbolGeneral<DatosJugada> aux;
+
+            int contador = 0;
+            bool NivelEncontrado = false;
+
+            c.encolar(referencia);
+            c.encolar(null);
+            while (!c.esVacia())
+            {
+                arbol = c.desencolar();
+                if (arbol != null)
+
+                {
+                    if (contador == nivel)
+                    {
+                        NivelEncontrado = true;
+                        if (arbol.getDatoRaiz().valorDeConveniencia == 1)
+                            Console.Write(arbol.getDatoRaiz().carta + " " + "[Pierde], ");
+                        if (arbol.getDatoRaiz().valorDeConveniencia == -1)
+                            Console.Write(arbol.getDatoRaiz().carta + " " + "[Gana], ");
+                    }
+                }
+                if (arbol == null)
+                {
+                    if (!c.esVacia())
+                        c.encolar(null);
+                    contador++;
+                }
+                else
+                {
+                    if (!referencia.esHoja())
+                    {
+                        foreach (var hijo in arbol.getHijos())
+                            c.encolar(hijo);
+                    }
+                }
+
+            }
+            if (NivelEncontrado == false)
+            {
+                Console.WriteLine("No se encontro la profunidad. Regresando al juego....");
+            }
+        }
+
+        public void pResultados(ArbolGeneral<DatosJugada> aux) //metodo que imprime posibles resultados.
+        {
+            ImprimirHojas(aux);
+        }
+        public ArbolGeneral<DatosJugada> getMinimax()
+        {
+
+            return minimax;
+        }
+        public ArbolGeneral<DatosJugada> getReferencia()
+        {
+            return referencia; //Consigo la referencia para las consultas.
+        }
+        public void Niveles(int dato, ArbolGeneral<DatosJugada> arbol)
+        {
+            imprimirNivel(dato, arbol);
+        }
+        public static void eliminarMinimax()
+        {
+            minimax.limpiar();
+            referencia.limpiar();
+        }
+        public static void eliminarNaipes()
+        {
+            naipes.Clear();
+        }
+        public void ImprimirHojas(ArbolGeneral<DatosJugada> arbol)
+        {
+            Cola<ArbolGeneral<DatosJugada>> c = new Cola<ArbolGeneral<DatosJugada>>();
+            ArbolGeneral<DatosJugada> aux;
+            c.encolar(arbol);  //encola minimax
+            while (!c.esVacia())
+            {
+                aux = c.desencolar();
+                if (!aux.esHoja())
+                {
+                    foreach (var nodo in aux.getHijos())
+                    {
+                        c.encolar(nodo);
+                    }
+                }
+                if (aux.esHoja() && aux.getDatoRaiz().valorDeConveniencia == 1)
+                {
+
+                    Console.Write("|(" + aux.getDatoRaiz().carta + ")[Pierde]|, ");
+                }
+                if (aux.esHoja() && aux.getDatoRaiz().valorDeConveniencia == -1)
+                {
+                    Console.Write("|(" + aux.getDatoRaiz().carta + ")[Gana], ");
+                }
+            }
+        }
+
+        public void ImprimirCartas()
+        {
+            Console.WriteLine("Las cartas de la pc son: ");
+            foreach (int cartas in naipes)
+            {
+
+                Console.Write(cartas + "" + ",");
+            }
+            Console.WriteLine();
+        }
+
+    }
 }
