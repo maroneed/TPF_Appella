@@ -49,14 +49,14 @@ namespace juegoIA
         private  void ConsultaB()
         {
             ArbolGeneral<DatosJugada> referencia = computer.getReferencia(); //Uso de referencia a la carta en la posicion que se encuentra el juego.
-            bool rta = true;                    //Condicion para terminar las jugadas
+            bool dato = true;                    //Condicion para terminar las jugadas
             bool turno= true;
             computer.ImprimirCartas();
-            while (rta)
+            while (dato)
             {
                 if (turno==true)
                 {
-                    Console.WriteLine("Ingrese la carta que jugaría usted:");
+                    Console.WriteLine("Ingresa la carta que tirarias:");
                     string carta = Console.ReadLine();                   
                     bool aux = false;
                     while (aux == false)
@@ -68,7 +68,7 @@ namespace juegoIA
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("El valor no es correcto.");
+                            Console.WriteLine("Valor incorrecto.");
                             carta = Console.ReadLine();
                         }
 
@@ -88,13 +88,13 @@ namespace juegoIA
                     if (referencia.getDatoRaiz().carta != Int32.Parse(carta))     //Si donde esta ubicado el arbol en ese momento no coincide con la carta entonces quiere decir que un valor es incorrecto.
                                                                             // O quiere decir que se paso del limite.
                     {
-                        Console.WriteLine("La carta no esta disponible o se a alcanzado el limite del maso. Volviendo a la jugada...");
+                        Console.WriteLine("Carta no disponible");
                         return;
                     }
                 }
                 if(turno==false)
                 {
-                    Console.WriteLine("Ingrese la carta que tiraría computer:");
+                    Console.WriteLine("Ingrese la carta que tiraria ComputerPlayer:");
                     string carta = Console.ReadLine();                   
                     bool aux = false;
                     while (aux == false)
@@ -106,7 +106,7 @@ namespace juegoIA
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("El valor no es correcto.");
+                            Console.WriteLine("Valor incorrecto.");
                             carta = Console.ReadLine();
                         }
                     }
@@ -122,16 +122,16 @@ namespace juegoIA
                     }
                     if (referencia.getDatoRaiz().carta != Int32.Parse(carta))     //Si donde esta ubicado el arbol en ese momento no coincide con la carta entonces quiere decir que un valor es incorrecto.
                     {
-                        Console.WriteLine("La carta no esta disponible o se a alcanzado el limite del maso. Volviendo a la jugada...");
+                        Console.WriteLine("Carta no disponible");
                         return;
                     }                    
                 }
-                Console.WriteLine("Desea continuar la jugada?: Cualquier tecla para Si u oprima 'N' para no");
-                string rta2 = Console.ReadLine().ToUpper();
-                if (rta2 == "N")
-                    rta = !rta;                                                       
+                Console.WriteLine("Continuar jugada?: precione N para salir");
+                string dato2 = Console.ReadLine().ToUpper();
+                if (dato2 == "N")
+                    dato = !dato;                                                       
             }
-            Console.WriteLine("Los posibles resultados para la jugada que acaba de ingresar son:");
+            Console.WriteLine("Posibles resultados para dicha jugada:");
             Console.WriteLine();
             computer.ImprimirHojas(referencia);                 //Imprime posibles resultados
         }
@@ -140,30 +140,30 @@ namespace juegoIA
             ArbolGeneral<DatosJugada> minimaxAux = new ArbolGeneral<DatosJugada>(null);
             minimaxAux = computer.getMinimax();            
             Console.WriteLine();
-            Console.WriteLine("Indique una profundidad");
-            string rta = Console.ReadLine();
+            Console.WriteLine("Indique profundidad");
+            string dato = Console.ReadLine();
             bool aux = false;
             while (aux == false)                        //Se comprueba que haya ingresado un valor coherente
             {
                 try
                 {
-                    Int32.Parse(rta);
+                    Int32.Parse(dato);
                      aux=true;              //Si puede parsear el valor sale del while e imprime en dicha profundidad
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("El valor no es correcto. Intente de nuevo");
-                    rta = Console.ReadLine();
+                    Console.WriteLine("Valor incorrecto");
+                    dato = Console.ReadLine();
                 }
                 
             }
-            Console.WriteLine("Se mostraran las cartas en el nivel " + rta+". Oprima cualquier tecla para continuar");
+            Console.WriteLine("Te mostraremos las cartas en el nivel: " + dato + ". Toca cualquier tecla para continuar !");
             Console.ReadKey();
-            computer.imprimirNivel(Int32.Parse(rta),minimaxAux);            
+            computer.imprimirNivel(Int32.Parse(dato),minimaxAux);            
         }
         public void reinicio()
         {
-            Console.WriteLine("Desea comenzar nueva partida o desea salir.     Y/N");
+            Console.WriteLine("Queres la revancha?.     Y/N");
             string rta = Console.ReadLine().ToUpper();
             while (rta != "Y" && rta != "N")
             {
@@ -174,7 +174,7 @@ namespace juegoIA
             switch (rta)
             {
                 case "Y":
-                   ComputerPlayer.eliminarMinimax();            //Elimino el arbol estatico y los naipes estaticos para que luego se inicialicen de nuevo desde cero.
+                   ComputerPlayer.eliminarMinimax();            
                    ComputerPlayer.eliminarNaipes();
                    Console.Clear();                    
                    Game juego = new Game();

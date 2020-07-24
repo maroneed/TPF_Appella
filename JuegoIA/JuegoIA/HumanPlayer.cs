@@ -48,15 +48,15 @@ namespace juegoIA
 			Console.WriteLine("");
 
 			//esto solo es para comprobar si elige bien la maquina
-			Console.WriteLine("Naipes disponibles (Computer):");
-			for (int i = 0; i < naipesComputer.Count; i++)
-			{
-				Console.Write(naipesComputer[i].ToString());
-				if (i < naipesComputer.Count - 1)
-				{
-					Console.Write(", ");
-				}
-			}
+			//Console.WriteLine("Naipes disponibles (Computer):");
+			//for (int i = 0; i < naipesComputer.Count; i++)
+			//{
+			//	Console.Write(naipesComputer[i].ToString());
+			//	if (i < naipesComputer.Count - 1)
+			//	{
+			//		Console.Write(", ");
+			//	}
+			//}
 
 			Console.WriteLine();
 			if (!random_card) {
@@ -108,9 +108,13 @@ namespace juegoIA
 			
 			return carta;
 		}
-		
-		public override void cartaDelOponente(int carta){
+
+		public override void cartaDelOponente(int carta)
+		{
+			Console.WriteLine(".........................");
+			Console.WriteLine("IA ha tirado: " + carta);
+			Console.WriteLine(".........................");
 		}
-		
+
 	}
 }

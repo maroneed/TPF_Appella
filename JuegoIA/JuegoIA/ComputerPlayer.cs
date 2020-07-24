@@ -27,7 +27,7 @@ namespace juegoIA
             naipes = cartasPropias;
 
             crearArbol(cartasPropias, cartasOponente, limite, turno, minimax);
-            Console.WriteLine(minimax.getHijos().Count);
+            //Console.WriteLine(minimax.getHijos().Count);
         }
 
 
@@ -77,46 +77,47 @@ namespace juegoIA
 
         private void crearArbol(List<int> cartasPropias, List<int> cartasOponente, int limite, bool turno, ArbolGeneral<DatosJugada> aux)
         {
+            //con 1 gana, con -1 pierde. 
+            
             List<int> cartas = new List<int>(); //creo una lista vacia, que se llenara de cartas
             //al determinar que primero juegue el humano, siempre se ejecutará el IF
             if (turno)
             {
-                // Si es el turno del usuario agrego las cartas del oponente
+                // agrego cartas del humano
                 cartas.AddRange(cartasOponente);
             }
             else
             {
-                // Si es el turno de la IA agrego las cartas propias
+                // agregaría las cartas de computerPlayer
                 cartas.AddRange(cartasPropias);
             }
 
-            //comienzo a llenar el arbol minimax con las cartas del humano (cada una sera un subarbol)
+            //comienza a crearse el arbol
 
-            foreach (int carta in cartas)  //crea, por ende, 6 hijos a la raíz null del minmax
+            foreach (int carta in cartas)  //las cartas del humano formarán el primer nivel del arbol
             {
                 //-----------------------------------------------------------------------------------
                 DatosJugada jugada = new DatosJugada(0, 0, true);
                 // Creo subarboles hijos PARA cada carta
-                ArbolGeneral<DatosJugada> hijo = new ArbolGeneral<DatosJugada>(jugada);  //agrego la carta a la raiz
-                hijo.getDatoRaiz().carta = carta;
-                // Agrego los hijos al arbol minmax
-                aux.agregarHijo(hijo);
+                ArbolGeneral<DatosJugada> hijo = new ArbolGeneral<DatosJugada>(jugada);  
+                hijo.getDatoRaiz().carta = carta; 
+                
+                aux.agregarHijo(hijo);   
 
-                // Disminuyo el limite para cada carta
+                // Altero el limite en cada carta
                 int nuevoLimite = limite - carta;
 
-                // Tendremos una lista de cartas auxiliares para hacer la llamada recursiva sin la carta que ya se jugo
+                // creo una lista de cartas de apoyo. Esta se actualiza restando las cartas que ya fueron iteradas. 
                 List<int> cartasAux = new List<int>();
                 cartasAux.AddRange(cartas);
-                cartasAux.Remove(carta); //saca la primer carta que juega el humano y a partir de ahí sigue
+                cartasAux.Remove(carta); //saca la primer carta que se itero
 
 
-                // Chequeo el limite, si no se supero hago las llamadas recursivas y cambio el turno
+                // Chequeo el limite, si no es superado, llamo al método crearArbol de manera recursiva para completarlo, alternando el turno
                 if (nuevoLimite >= 0)
                 {
-                    bool Noencontro_Humano = false;
-                    //Variables que serviran para la busqueda heuristica
-                    bool Noencontro_Computer = false;
+                    bool H = false;
+                    bool C = false;
 
 
                     //---------------------------crea un nuevo nivel o no (dependiendo del if anterior) invirtiendo el turno----------------------------------------
@@ -125,22 +126,28 @@ namespace juegoIA
                     // Si es turno del usuario, paso las cartas auxiliares como cartas del oponente
 
                     if (turno)
-                    {
+                    {   
+                        //al pasar como parametro "hijo", logro que se vaya bajando ...
+                        //en este caso llena el nivel con las cartas de ComputerPlayer (ya que el turno cambia a False)
                         crearArbol(cartasPropias, cartasAux, nuevoLimite, !turno, hijo);  //paso como arbol, a los arboles hijos de la raiz. sucesivamente
 
                         // Comparo las funciones heuristicas de los hijos
                         foreach (var hijos in hijo.getHijos())
                         {
                             // Si hay una con valor 1, se la seteo al padre
-                            //esto hace que el -1 o 1 vaya subiendo y se setee desde la hoja hasta los hijos del primer nivel
+                            
                             if (hijos.getDatoRaiz().valorDeConveniencia == -1)
+                            {
                                 hijo.getDatoRaiz().valorDeConveniencia = -1;
+                            }
                             else
-                                Noencontro_Humano = true;
+                            {
+                                H = true;
+                            }
                         }
-                        if (Noencontro_Humano)
+                        if (H)
                         {
-                            Noencontro_Humano = !Noencontro_Humano;             //Si no encuentra quiere decir que no hay un hijo con valor -1 y entonces se le sete 1 al padre.
+                            H = !H;             //Si no encuentra quiere decir que no hay un hijo con valor -1 y entonces se le sete 1 al padre.
                             hijo.getDatoRaiz().valorDeConveniencia = 1;
                         }
 
@@ -158,11 +165,11 @@ namespace juegoIA
                             if (hijos.getDatoRaiz().valorDeConveniencia == 1)
                                 hijo.getDatoRaiz().valorDeConveniencia = 1;
                             else
-                                Noencontro_Computer = true;
+                                C = true;
                         }
-                        if (Noencontro_Computer)
+                        if (C)
                         {
-                            Noencontro_Computer = !Noencontro_Computer;     //Si no encuentra quiere decir que no hay un hijo con valor 1 y entonces se le sete 1 al padre.
+                            C = !C;     //Si no encuentra quiere decir que no hay un hijo con valor 1 y entonces se le sete 1 al padre.
                             hijo.getDatoRaiz().valorDeConveniencia = -1;
                         }
                     }
@@ -199,7 +206,7 @@ namespace juegoIA
 				arbolAux = c.desencolar();
 				if (arbolAux != null)
 				{
-					Console.Write(arbolAux.getDatoRaiz().carta + " ");            //Modificado para mostrrar niveles. B V
+					Console.Write(arbolAux.getDatoRaiz().carta + " ");         
 					Console.Write("[" + arbolAux.getDatoRaiz().limiteActual + "]" + " ");
 				}
 				if (arbolAux == null)
@@ -208,7 +215,7 @@ namespace juegoIA
 					{
 						contador++;
 						Console.WriteLine();
-						Console.WriteLine("*****Nivel ******");
+						Console.WriteLine(".......Nivel.......");
 						c.encolar(null);
 					}
 				}
@@ -267,7 +274,7 @@ namespace juegoIA
             }
             if (NivelEncontrado == false)
             {
-                Console.WriteLine("No se encontro la profunidad. Regresando al juego....");
+                Console.WriteLine("No fue posible encontrar la profundidad indicada ....");
             }
         }
 
@@ -326,7 +333,7 @@ namespace juegoIA
 
         public void ImprimirCartas()
         {
-            Console.WriteLine("Las cartas de la pc son: ");
+            Console.WriteLine("Cartas IA disponibles: ");
             foreach (int cartas in naipes)
             {
 
