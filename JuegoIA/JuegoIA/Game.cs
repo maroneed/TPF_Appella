@@ -14,10 +14,11 @@ namespace juegoIA
 		
 		private Jugador player1 = new ComputerPlayer();
 		private Jugador player2 = new HumanPlayer();
-		private List<int> naipesHuman = new List<int>();
+		private Consultas consulta = new Consultas();
+        private List<int> naipesHuman = new List<int>();
 		private List<int> naipesComputer = new List<int>();
 		private int limite;
-		private bool juegaHumano = false;
+		private bool juegaHumano = true;
 		
 		
 		public Game()
@@ -57,12 +58,17 @@ namespace juegoIA
 		
 		private void printWinner()
 		{
-			if (!juegaHumano) {
-				Console.WriteLine("Gano el Ud");
-			} else {
-				Console.WriteLine("Gano Computer");
+			if (juegaHumano)
+			{
+				Console.WriteLine("Ganó el Usuario");
+				consulta.reinicio();
 			}
-			
+			else
+			{
+				Console.WriteLine("Ganó la Computadora");
+				consulta.reinicio();
+			}
+
 		}
 		
 		private bool fin()

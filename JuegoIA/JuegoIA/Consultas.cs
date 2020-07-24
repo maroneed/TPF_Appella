@@ -186,5 +186,6 @@ namespace juegoIA
                     break;
             }
         }
+
     }
 }

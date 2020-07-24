@@ -34,6 +34,7 @@ namespace juegoIA
 		{
 			int carta = 0;
 			Console.WriteLine("Naipes disponibles (Usuario):");
+
 			for (int i = 0; i < naipes.Count; i++) {
 				Console.Write(naipes[i].ToString());
 				if (i<naipes.Count-1) {
@@ -44,6 +45,7 @@ namespace juegoIA
 			Console.Write("");
 			Console.WriteLine(" ");
 
+			Console.WriteLine("");
 
 			//esto solo es para comprobar si elige bien la maquina
 			Console.WriteLine("Naipes disponibles (Computer):");

@@ -17,7 +17,7 @@ namespace JuegoIA
         {
             this.carta = carta;
             this.limiteActual = limiteActual;
-            this.esAI = esAI;
+            //this.esAI = esAI;
         }
 
 
